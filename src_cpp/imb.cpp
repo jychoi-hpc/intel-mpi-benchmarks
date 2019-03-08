@@ -337,8 +337,10 @@ int main(int argc, char * *argv)
         for (running_sequence::iterator it = sequence.begin(); it != sequence.end(); ++it) {
             smart_ptr<Benchmark> &b = it->first;
             smart_ptr<Scope> &scope = it->second;
-            for (Scope::iterator s = scope->begin(); s != scope->end(); ++s)
+            for (Scope::iterator s = scope->begin(); s != scope->end(); ++s) {
+                if ((*s).np > 2) break;
                 b->run(*s);
+            }
         }
 
         // 4. Finalize cycle
